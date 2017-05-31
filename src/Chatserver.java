@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.Scanner;
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
@@ -10,6 +10,7 @@ public class Chatserver {
     public void makeserver() {
         try {
             ServerSocket serverSocket = new ServerSocket(5000);
+            Scanner scanner = new Scanner(System.in);
             while(true) {
                 Socket s = serverSocket.accept();
                 System.out.print("Connected");
