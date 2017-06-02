@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Sai Lalith on 5/31/2017.
@@ -23,7 +22,7 @@ public class Chatserver {
                     msgToClient("Welcome new Client at "+s.getPort(),allSockets);
                 }
                 clients.add(s);
-                ReadThread readThread = new ReadThread(s);
+                MaintainClients readThread = new MaintainClients(s);
                 Thread t1 = new Thread(readThread);
                 t1.start();
             }
@@ -34,9 +33,9 @@ public class Chatserver {
     public static void main(String ar[]){
             new Chatserver().makeserver();
     }
-    class ReadThread implements Runnable{
+    class MaintainClients implements Runnable{
         Socket s;
-        public ReadThread(Socket clientSocket){
+        public MaintainClients(Socket clientSocket){
             this.s = clientSocket;
         }
         @Override

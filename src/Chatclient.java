@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -65,7 +64,6 @@ public class Chatclient {
                 String msg;
                 while(true){
                     msg = bufferedReader.readLine();
-
                     pw.println(name+": "+msg);
                     pw.flush();
                     if(msg.toLowerCase().equals("bye")) {
