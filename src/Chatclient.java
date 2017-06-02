@@ -3,17 +3,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
+import java.util.Scanner;
+
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatclient {
+    static String name;
     public void connect(){
         try{
+            System.out.println("Enter your name please");
+            Scanner scanner = new Scanner(System.in);
+            name = scanner.next();
+            //System.out.print(name);
             Socket s = new Socket("localhost",5000);
             ReadThread readThread = new ReadThread(s);
             Thread t1 = new Thread(readThread);
             t1.start();
-            WriteThread writeThread = new WriteThread(s);
+            WriteThread writeThread = new WriteThread(s,name);
             Thread t2 = new Thread(writeThread);
             t2.start();
         }
@@ -34,26 +42,21 @@ public class Chatclient {
                 String msg;
                 while(true){
                     while((msg = bufferedReader.readLine())!= null){
-                        if(msg.equals("Bye")){
-                            System.out.println("Server said BYE !!");
-                            System.exit(0);
-                        }else{
-                            System.out.println(msg);
-                        }
+                        System.out.println(msg);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
     public class WriteThread implements Runnable{
         Socket s;
-        public WriteThread(Socket clientSocket){
+        String name;
+        public WriteThread(Socket clientSocket,String name){
             this.s = clientSocket;
+            this.name = name;
         }
-
         @Override
         public void run() {
             try {
@@ -62,8 +65,12 @@ public class Chatclient {
                 String msg;
                 while(true){
                     msg = bufferedReader.readLine();
-                    pw.println(msg);
+
+                    pw.println(name+": "+msg);
                     pw.flush();
+                    if(msg.toLowerCase().equals("bye")) {
+                        System.exit(0);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
