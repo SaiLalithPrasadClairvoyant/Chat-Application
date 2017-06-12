@@ -33,7 +33,6 @@ public class Chatclient {
         if (Authentication.isValidUser(name,password)){
             Chatclient chatclient = new Chatclient();
             chatclient.connect();
-            Chatserver.addClient(chatclient);
         }
         else{
             System.out.println("User Authentication Failed !!");

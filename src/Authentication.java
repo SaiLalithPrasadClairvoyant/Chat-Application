@@ -7,8 +7,7 @@ import java.util.Map;
 public class Authentication {
     static HashMap<String,String> userList = new HashMap<>();
     static boolean isValidUser(String userName,String password){
-        Authentication.addNewUser("sai","sai");
-        Authentication.addNewUser("lalith","lalith");
+        addNewUser("sai","sai");
         for(Map.Entry<String,String> user : userList.entrySet()){
             if(user.getKey().equals(userName) && user.getValue().equals(password)){
                 return true;

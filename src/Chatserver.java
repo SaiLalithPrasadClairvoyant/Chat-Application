@@ -17,6 +17,7 @@ public class Chatserver {
             while(true) {
                 Socket s = serverSocket.accept();
                 System.out.println("Client Connected at port   " + s.getPort());
+
                 for(Socket allClients:clients){
                     MaintainClients.msgToClient("Welcome new Client at "+s.getPort(),allClients);
                 }
