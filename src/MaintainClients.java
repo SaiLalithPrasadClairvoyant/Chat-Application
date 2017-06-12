@@ -22,13 +22,13 @@ class MaintainClients implements Runnable{
                 if (msgFromClient.toLowerCase().contains("bye")) {
                     System.out.println("Client said BYE !!"+s.getPort());
                     Chatserver.clients.remove(s);
-                    for(Socket allClients : Chatserver.clients){
+                    for(Socket allClients : Chatserver.getList(s)){
                         msgToClient(s.getPort()+"  Left!",allClients);
                     }
                     s.close();
                     break;
                 } else {
-                    for(Socket allClients : Chatserver.clients) {
+                    for(Socket allClients : Chatserver.getList(s)) {
                         if(allClients.getPort()!=s.getPort()) {
                             msgToClient(msgFromClient,allClients);
                         }

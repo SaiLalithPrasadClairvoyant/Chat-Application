@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Created by Sai Lalith Pathi on 09-Jun-17.
  */
-public class Authentication {
+public  class Authentication {
     static HashMap<String,String> userList = new HashMap<>();
     static boolean isValidUser(String userName,String password){
         addNewUser("sai","sai");

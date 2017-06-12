@@ -8,6 +8,7 @@ public class Chatclient {
     static String name;
     static String password;
     Socket s;
+    static Chatclient chatclient = new Chatclient();
     Clientdetails clientdetails = new Clientdetails();
     public void connect(){
         try{
@@ -31,7 +32,6 @@ public class Chatclient {
         System.out.println("Enter Password");
         password = scanner.nextLine();
         if (Authentication.isValidUser(name,password)){
-            Chatclient chatclient = new Chatclient();
             chatclient.connect();
         }
         else{
