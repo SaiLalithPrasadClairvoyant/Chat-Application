@@ -57,7 +57,7 @@ public class Chatserver {
     public static void main(String ar[]){
         TimerTask timerTask = new Stats();
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(timerTask,0,3*1000);
+        timer.scheduleAtFixedRate(timerTask,0,30*1000);
         new Chatserver().makeserver(5000);
     }
 }

@@ -10,6 +10,6 @@ public class Stats extends TimerTask{
     }
     @Override
     public void run() {
-        System.out.print("Total number of Messages:"+totalMessages);
+        System.out.println("Total number of Messages:"+totalMessages);
     }
 }
