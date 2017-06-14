@@ -28,6 +28,7 @@ class MaintainClients implements Runnable{
                     s.close();
                     break;
                 } else {
+                    Stats.add();
                     for(Socket allClients : Chatserver.getList(s)) {
                         if(allClients.getPort()!=s.getPort()) {
                             msgToClient(msgFromClient,allClients);

@@ -1,15 +1,17 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatserver {
-    static int totalMessages=0;
     static ArrayList<Socket> clients = new ArrayList<>();
     static ArrayList<Socket> one = new ArrayList<>();
     void makeserver(int port) {
@@ -25,10 +27,13 @@ public class Chatserver {
                 String group = bufferedReader.readLine();
                 if(group.contains("one")){
                     System.out.println("Member added to One group");
+                    for (Socket allClients : clients) {
+                        MaintainClients.msgToClient("New client joined to group ONE!", allClients);
+                    }
                     one.add(s);
                 }else {
                     for (Socket allClients : clients) {
-                        MaintainClients.msgToClient("Welcome new Client at " + s.getPort(), allClients);
+                        MaintainClients.msgToClient("New client joined !", allClients);
                     }
                     clients.add(s);
                 }
@@ -46,13 +51,13 @@ public class Chatserver {
         else
         return clients;
     }
-    static void moreMessages(){
-        totalMessages++;
-    }
     /*static void addClient(Chatclient cc){
         chatclients.add(cc);
     }*/
     public static void main(String ar[]){
+        TimerTask timerTask = new Stats();
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(timerTask,0,3*1000);
         new Chatserver().makeserver(5000);
     }
 }
