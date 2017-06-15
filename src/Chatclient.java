@@ -5,15 +5,13 @@ import java.util.Scanner;
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatclient {
-    static String name;
-    static String password;
-    Socket s;
-    static Chatclient chatclient = new Chatclient();
-    Clientdetails clientdetails = new Clientdetails();
-    public void connect(){
+    private static String name;
+    private static Chatclient chatclient = new Chatclient();
+    private Clientdetails clientdetails = new Clientdetails();
+    private void connect(){
         try{
             clientdetails.setClientName(name);
-            s = new Socket("localhost",5000);
+            Socket s = new Socket("localhost", 5000);
             ReadThread readThread = new ReadThread(s);
             Thread t1 = new Thread(readThread);
             t1.start();
@@ -25,13 +23,13 @@ public class Chatclient {
             e.printStackTrace();
         }
     }
-    public static void main(String args[]){
+    public static void main(String[] args){
         System.out.println("Enter your Name please");
         Scanner scanner = new Scanner(System.in);
         name = scanner.nextLine();
         System.out.println("Enter Password");
-        password = scanner.nextLine();
-        if (Authentication.isValidUser(name,password)){
+        String password = scanner.nextLine();
+        if (Authentication.isValidUser(name, password)){
             chatclient.connect();
         }
         else{

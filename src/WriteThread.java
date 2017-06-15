@@ -8,9 +8,9 @@ import java.net.Socket;
  * Created by Sai Lalith Pathi on 08-Jun-17.
  */
 public class WriteThread implements Runnable{
-    Socket s;
-    String name;
-    public WriteThread(Socket clientSocket,String name){
+    private Socket s;
+    private String name;
+    WriteThread(Socket clientSocket, String name){
         this.s = clientSocket;
         this.name = name;
     }
@@ -24,8 +24,8 @@ public class WriteThread implements Runnable{
                 msg = bufferedReader.readLine();
                 pw.println(name+": "+msg);
                 pw.flush();
-                if(msg.toLowerCase().equals("bye")) {
-                    System.exit(0);
+                if(msg.equalsIgnoreCase("bye")) {
+                    break;
                 }
             }
         } catch (IOException e) {

@@ -7,8 +7,8 @@ import java.net.Socket;
  * Created by Sai Lalith Pathi on 08-Jun-17.
  */
 public class ReadThread implements Runnable{
-    Socket s;
-    public ReadThread(Socket clientSocket){
+    private Socket s;
+    ReadThread(Socket clientSocket){
         this.s = clientSocket;
     }
     @Override
@@ -17,11 +17,9 @@ public class ReadThread implements Runnable{
             InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String msg;
-            while(true){
                 while((msg = bufferedReader.readLine())!= null){
                     System.out.println(msg);
                 }
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
