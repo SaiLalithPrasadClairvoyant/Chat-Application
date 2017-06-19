@@ -1,60 +1,75 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import org.slf4j.*;
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatserver {
+    private static  Logger logger = LoggerFactory.getLogger(Chatserver.class);
+    private static List<Group> allGroups = new ArrayList<>();
     private ServerSocket serverSocket = null;
-    static ArrayList<Socket> clients = new ArrayList<>();
-    private static ArrayList<Socket> one = new ArrayList<>();
-    private void makeserver()  {
+    private void startServer(){
         try {
             serverSocket = new ServerSocket(5000);
-            System.out.println("Server is running and waiting for clients.");
+            logger.info("Server is running and waiting for clients.");
             while (true) {
                 Socket s = serverSocket.accept();
-                System.out.println("Client Connected at port   " + s.getPort());
-                MaintainClients.msgToClient("Which Group", s);
-                InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String group = bufferedReader.readLine();
-                if (group.contains("one")) {
-                    System.out.println("Member added to One group");
-                    for (Socket allClients : one) {
-                        MaintainClients.msgToClient("New client joined to group ONE!", allClients);
-                    }
-                    one.add(s);
-                } else {
-                    for (Socket allClients : clients) {
-                        MaintainClients.msgToClient("New client joined !", allClients);
-                    }
-                    clients.add(s);
+                logger.info("Client Connected at port   " + s.getPort());
+                if (allGroups.size() == 5) {
+                    serverSocket.close();
+                    break;
                 }
-                MaintainClients maintainClients = new MaintainClients(s);
-                Thread t1 = new Thread(maintainClients);
-                t1.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
     }
-    static ArrayList<Socket> getList(Socket s){
-        if(one.contains(s))
-        return one;
-        else
-        return clients;
+   static List<User> getList(User u){
+       for(Group g:allGroups){
+           if(g.getUsers().contains(u)){
+               return g.getUsers();
+           }
+       }
+       return new ArrayList<>();
     }
     public static void main(String[] ar){
+        Chatserver chatserver = new Chatserver();
         TimerTask timerTask = new Stats();
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(timerTask,0,30*1000L);
-        new Chatserver().makeserver();
+        chatserver.startServer();
+    }
+
+    private static List<Group> getAllGroups() {
+        return allGroups;
+    }
+    private static void addGroup(Group g){
+       allGroups.add(g);
+    }
+    static void registerNewUser(String groupNameFromUser, User user) throws IOException {
+        boolean groupExists = false;
+        user.setSocket(new Socket("localhost",5000));
+        for(Group g : Chatserver.getAllGroups()){
+            if(groupNameFromUser.equalsIgnoreCase(g.getGroupName())){
+                g.addUser(user);
+                groupExists = true;
+                break;
+            }
+        }
+        if(!groupExists){
+            Group newGroup = new Group();
+            newGroup.setGroupName(groupNameFromUser);
+            newGroup.addUser(user);
+            Chatserver.addGroup(newGroup);
+            logger.info("New group created");
+        }
+        MaintainClients maintainClients = new MaintainClients(user);
+        Thread maintainClient = new Thread(maintainClients);
+        maintainClient.start();
     }
 }

@@ -1,39 +1,37 @@
-import java.net.Socket;
+import java.io.IOException;
 import java.util.Scanner;
-
+import org.slf4j.*;
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatclient {
-    private static String name;
-    private static Chatclient chatclient = new Chatclient();
-    private Clientdetails clientdetails = new Clientdetails();
-    private void connect(){
-        try{
-            clientdetails.setClientName(name);
-            Socket s = new Socket("localhost", 5000);
-            ReadThread readThread = new ReadThread(s);
+    private static Logger logger = LoggerFactory.getLogger(Chatclient.class);
+    private static void connect(User u){
+            ReadThread readThread = new ReadThread(u);
             Thread t1 = new Thread(readThread);
             t1.start();
-            WriteThread writeThread = new WriteThread(s,name);
+            WriteThread writeThread = new WriteThread(u);
             Thread t2 = new Thread(writeThread);
             t2.start();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
-    public static void main(String[] args){
+    private void makeNewUser() throws IOException {
         System.out.println("Enter your Name please");
         Scanner scanner = new Scanner(System.in);
-        name = scanner.nextLine();
+        String name = scanner.nextLine();
         System.out.println("Enter Password");
         String password = scanner.nextLine();
-        if (Authentication.isValidUser(name, password)){
-            chatclient.connect();
+        System.out.println("Enter the group name");
+        String group = scanner.nextLine();
+        if (new Authentication().isValidUser(name, password)) {
+            User user = new User(name);
+            Chatserver.registerNewUser(group, user);
+            Chatclient.connect(user);
+        } else {
+            logger.info("User Authentication Failed !!");
         }
-        else{
-            System.out.println("User Authentication Failed !!");
-        }
+    }
+    public static void main(String[] args) throws IOException {
+        Chatclient chatclient = new Chatclient();
+        chatclient.makeNewUser();
     }
 }

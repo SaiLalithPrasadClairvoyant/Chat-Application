@@ -3,51 +3,58 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
+import org.slf4j.*;
 /**
  * Created by Sai Lalith Pathi on 09-Jun-17.
  */
 class MaintainClients implements Runnable{
+    private static  Logger logger = LoggerFactory.getLogger(MaintainClients.class);
     private Socket s;
-    MaintainClients(Socket clientSocket){
-        this.s = clientSocket;
+    private User user;
+    MaintainClients(User u){
+        this.user = u;
+        this.s = u.getSocket();
     }
     @Override
     public void run() {
         try {
+            logger.info(s.getLocalPort()+"MaintainThread");
+            for(User all:Chatserver.getList(user)){
+                System.out.println(all.getUserName());
+            }
             InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String msgFromClient;
             while ((msgFromClient = bufferedReader.readLine()) != null) {
                 if (msgFromClient.toLowerCase().contains("bye")) {
-                    System.out.println("Client said BYE !!"+s.getPort());
-                    Chatserver.clients.remove(s);
-                    for(Socket allClients : Chatserver.getList(s)){
-                        msgToClient(s.getPort()+"  Left!",allClients);
+                    System.out.println("Client said BYE !!"+user.name);
+                    for(User allUsers : Chatserver.getList(user)){
+                        msgToClient(s.getPort()+"  Left!", allUsers.getSocket());
                     }
                     s.close();
                     break;
                 } else {
                     Stats.add();
-                    for(Socket allClients : Chatserver.getList(s)) {
-                        if(allClients.getPort()!=s.getPort()) {
-                            msgToClient(msgFromClient,allClients);
+                    System.out.println(msgFromClient);
+                    for(User allUsers : Chatserver.getList(user)) {
+                        if(allUsers.getSocket() != user.getSocket()) {
+                            msgToClient(msgFromClient, allUsers.getSocket());
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Exception",e);
 
         }
     }
-    static void msgToClient(String msgFromClient, Socket si) {
+    private void msgToClient(String msgFromClient, Socket si) {
         try {
             PrintWriter pw = new PrintWriter(si.getOutputStream());
             pw.println(msgFromClient);
             pw.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Exception",e);
         }
     }
 }
