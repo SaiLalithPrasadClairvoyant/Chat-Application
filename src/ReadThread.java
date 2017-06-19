@@ -23,7 +23,7 @@ public class ReadThread implements Runnable{
                     System.out.println(msg);
                 }
         } catch (IOException e) {
-            logger.error("Exception",e);
+            logger.error("IOException at ReadThread",e);
         }
     }
 }

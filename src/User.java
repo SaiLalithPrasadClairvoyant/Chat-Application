@@ -4,7 +4,7 @@ import java.net.Socket;
  * Created by Sai Lalith Pathi on 15-Jun-17.
  */
 class User {
-    String name;
+    private String name;
 
     String getUserName() {
         return name;

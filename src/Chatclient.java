@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.net.Socket;
 import java.util.Scanner;
 import org.slf4j.*;
+
 /**
  * Created by Sai Lalith on 5/31/2017.
  */
@@ -14,7 +16,7 @@ public class Chatclient {
             Thread t2 = new Thread(writeThread);
             t2.start();
     }
-    private void makeNewUser() throws IOException {
+    public void makeNewUser() throws IOException {
         System.out.println("Enter your Name please");
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
@@ -24,6 +26,7 @@ public class Chatclient {
         String group = scanner.nextLine();
         if (new Authentication().isValidUser(name, password)) {
             User user = new User(name);
+            user.setSocket(new Socket("localhost",5000));
             Chatserver.registerNewUser(group, user);
             Chatclient.connect(user);
         } else {

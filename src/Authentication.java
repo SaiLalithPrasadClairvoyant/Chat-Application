@@ -9,7 +9,7 @@ class Authentication {
     boolean isValidUser(String userName,String password){
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
         addNewUser("sai",passwordEncryptor.encryptPassword("sai"));
-        addNewUser("lalith","lalith");
+        addNewUser("lalith",passwordEncryptor.encryptPassword("lalith"));
         for(Map.Entry<String,String> user : userList.entrySet()){
             if(user.getKey().equals(userName) && passwordEncryptor.checkPassword(password,user.getValue())){
                 return true;

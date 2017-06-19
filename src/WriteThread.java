@@ -32,7 +32,7 @@ public class WriteThread implements Runnable{
                 }
             }
         } catch (IOException e) {
-            logger.error("Exception",e);
+            logger.error("IOException at WriteThread",e);
         }
     }
 }

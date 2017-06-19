@@ -10,7 +10,7 @@ import org.slf4j.*;
  * Created by Sai Lalith on 5/31/2017.
  */
 public class Chatserver {
-    private static  Logger logger = LoggerFactory.getLogger(Chatserver.class);
+    private static final Logger logger = LoggerFactory.getLogger(Chatserver.class);
     private static List<Group> allGroups = new ArrayList<>();
     private ServerSocket serverSocket = null;
     private void startServer(){
@@ -26,7 +26,7 @@ public class Chatserver {
                 }
             }
         } catch (IOException e) {
-            logger.error(e.getLocalizedMessage());
+            logger.error("Error while starting server {}",e);
         }
     }
    static List<User> getList(User u){
@@ -48,12 +48,13 @@ public class Chatserver {
     private static List<Group> getAllGroups() {
         return allGroups;
     }
+
     private static void addGroup(Group g){
        allGroups.add(g);
     }
-    static void registerNewUser(String groupNameFromUser, User user) throws IOException {
+
+    static void registerNewUser(String groupNameFromUser, User user) {
         boolean groupExists = false;
-        user.setSocket(new Socket("localhost",5000));
         for(Group g : Chatserver.getAllGroups()){
             if(groupNameFromUser.equalsIgnoreCase(g.getGroupName())){
                 g.addUser(user);
@@ -66,7 +67,7 @@ public class Chatserver {
             newGroup.setGroupName(groupNameFromUser);
             newGroup.addUser(user);
             Chatserver.addGroup(newGroup);
-            logger.info("New group created");
+            logger.info("New group created,Total groups :{}",Chatserver.getAllGroups().size());
         }
         MaintainClients maintainClients = new MaintainClients(user);
         Thread maintainClient = new Thread(maintainClients);

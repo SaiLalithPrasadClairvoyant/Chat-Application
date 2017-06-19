@@ -9,35 +9,31 @@ import org.slf4j.*;
  */
 class MaintainClients implements Runnable{
     private static  Logger logger = LoggerFactory.getLogger(MaintainClients.class);
-    private Socket s;
+    private Socket socket;
     private User user;
     MaintainClients(User u){
         this.user = u;
-        this.s = u.getSocket();
+        this.socket = u.getSocket();
     }
     @Override
     public void run() {
         try {
-            logger.info(s.getLocalPort()+"MaintainThread");
-            for(User all:Chatserver.getList(user)){
-                System.out.println(all.getUserName());
-            }
-            InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream());
+            logger.info(socket.getLocalPort()+"MaintainThread");
+            InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String msgFromClient;
             while ((msgFromClient = bufferedReader.readLine()) != null) {
                 if (msgFromClient.toLowerCase().contains("bye")) {
-                    System.out.println("Client said BYE !!"+user.name);
+                    logger.info("left !"+user.getUserName());
                     for(User allUsers : Chatserver.getList(user)){
-                        msgToClient(s.getPort()+"  Left!", allUsers.getSocket());
+                        msgToClient(user.getUserName()+"  Left!", allUsers.getSocket());
                     }
-                    s.close();
+                    socket.close();
                     break;
                 } else {
                     Stats.add();
-                    System.out.println(msgFromClient);
                     for(User allUsers : Chatserver.getList(user)) {
-                        if(allUsers.getSocket() != user.getSocket()) {
+                        if(allUsers.getSocket() != socket) {
                             msgToClient(msgFromClient, allUsers.getSocket());
                         }
                     }
