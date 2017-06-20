@@ -1,3 +1,5 @@
+package ChatApplication;
+
 class User {
     private String name;
 

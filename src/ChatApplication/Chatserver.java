@@ -1,3 +1,5 @@
+package ChatApplication;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,11 +15,9 @@ import org.slf4j.*;
 public class Chatserver {
     private static final Logger logger = LoggerFactory.getLogger(Chatserver.class);
     private static List<Group> allGroups = new ArrayList<>();
-    private static ServerSocket serverSocket = null;
 
     private static void startServer() {
-        try {
-            serverSocket = new ServerSocket(5000);
+        try (ServerSocket serverSocket = new ServerSocket(5000)) {
             logger.info("Server is running and waiting for clients.");
             while (true) {
                 Socket s = serverSocket.accept();
@@ -102,9 +102,9 @@ public class Chatserver {
         }
     }
 
-    static void removeUser(User user){
-        for(Group g : Chatserver.getAllGroups()){
-            if(g.getUsers().contains(user)){
+    static void removeUser(User user) {
+        for (Group g : Chatserver.getAllGroups()) {
+            if (g.getUsers().contains(user)) {
                 g.removeUser(user);
             }
         }
