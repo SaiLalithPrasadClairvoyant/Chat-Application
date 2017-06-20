@@ -1,4 +1,4 @@
-package ChatApplication;
+package chat.application;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,12 +33,13 @@ class Authentication {
         return false;
     }
 
-    private static void addNewUser(String userName, String password) {
-        try(OutputStream outputStream = new FileOutputStream("User.properties")){
+    public static void addNewUser(String userName, String password) {
+        try(OutputStream outputStream = new FileOutputStream("User.properties",true)){
             StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
             Properties properties = new Properties();
             properties.setProperty(userName,passwordEncryptor.encryptPassword(password));
             properties.store(outputStream,null);
+            outputStream.close();
         }catch(Exception e){
             logger.info("Exception while addind new User",e);
         }

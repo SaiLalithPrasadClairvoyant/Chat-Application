@@ -1,4 +1,4 @@
-package ChatApplication;
+package chat.application;
 
 import java.util.TimerTask;
 

@@ -1,4 +1,4 @@
-package ChatApplication;
+package chat.application;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,6 +43,7 @@ public class Chatserver {
     }
 
     public static void main(String[] ar) {
+        Authentication.addNewUser("sai","sai");
         TimerTask timerTask = new Stats();
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(timerTask, 0, 30 * 1000L);
