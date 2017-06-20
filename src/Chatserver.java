@@ -74,6 +74,7 @@ public class Chatserver {
                 if (groupNameFromUser.equalsIgnoreCase(g.getGroupName())) {
                     logger.info("User added to existing group !");
                     g.addUser(user);
+                    notifyAllClients(user);
                     groupExists = true;
                     break;
                 }
@@ -90,6 +91,22 @@ public class Chatserver {
             maintainClientThread.start();
         } else {
             MaintainClient.msgToClient("Authentication failed !", s);
+        }
+    }
+
+    private static void notifyAllClients(User user) {
+        for (User everyUser : Chatserver.getList(user)) {
+            if (!user.equals(everyUser)) {
+                MaintainClient.msgToClient(user.getUserName() + " Joined..", ConnectionRegistry.getUserSocket(everyUser));
+            }
+        }
+    }
+
+    static void removeUser(User user){
+        for(Group g : Chatserver.getAllGroups()){
+            if(g.getUsers().contains(user)){
+                g.removeUser(user);
+            }
         }
     }
 }

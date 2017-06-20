@@ -34,11 +34,12 @@ class MaintainClient implements Runnable {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String msgFromClient;
             while ((msgFromClient = bufferedReader.readLine()) != null) {
-                if (msgFromClient.toLowerCase().contains("bye")) {
+                if (msgFromClient.equalsIgnoreCase("bye")) {
                     logger.info("left !" + user.getUserName());
                     for (User everyUser : Chatserver.getList(user)) {
                         msgToClient(user.getUserName() + "  Left!", ConnectionRegistry.getUserSocket(everyUser));
                     }
+                    Chatserver.removeUser(user);
                     socket.close();
                     break;
                 } else {

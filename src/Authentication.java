@@ -1,28 +1,34 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class Authentication {
+    private static Logger logger = LoggerFactory.getLogger(WriteThread.class);
+
     private Authentication() {
         throw new IllegalStateException("Utility class");
     }
 
-    private static HashMap<String, String> userList = new HashMap<>();
-
     static boolean isValidUser(String userName, String password) {
-        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-        addNewUser("sai", passwordEncryptor.encryptPassword("sai"));
-        addNewUser("lalith", passwordEncryptor.encryptPassword("lalith"));
-        for (Map.Entry<String, String> user : userList.entrySet()) {
-            if (user.getKey().equals(userName) && passwordEncryptor.checkPassword(password, user.getValue())) {
+        try (InputStream inputStream = new FileInputStream("User.properties")) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+            if (passwordEncryptor.checkPassword(password, properties.getProperty(userName))) {
                 return true;
             }
+        } catch (Exception e) {
+            logger.info("Exception at Authentication",e);
         }
         return false;
     }
 
     private static void addNewUser(String userName, String password) {
-        userList.put(userName, password);
     }
+
 }

@@ -10,6 +10,10 @@ class Group {
         return users;
     }
 
+    void removeUser(User user) {
+        this.users.remove(user);
+    }
+
     void addUser(User u) {
         this.users.add(u);
     }

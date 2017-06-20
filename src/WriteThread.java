@@ -26,7 +26,6 @@ public class WriteThread implements Runnable {
                 pw.println(msg);
                 pw.flush();
                 if (msg.equalsIgnoreCase("bye")) {
-                    System.exit(0);
                     break;
                 }
             }

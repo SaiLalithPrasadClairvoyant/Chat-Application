@@ -17,7 +17,7 @@ public class Chatclient {
             Thread t2 = new Thread(writeThread);
             t2.start();
         } catch (Exception e) {
-            logger.info("Exception !",e);
+            logger.info("Exception !", e);
         }
     }
 }
