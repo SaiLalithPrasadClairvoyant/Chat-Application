@@ -4,16 +4,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import org.slf4j.*;
-/**
- * Created by Sai Lalith Pathi on 08-Jun-17.
- */
+
 public class WriteThread implements Runnable{
     private static  Logger logger = LoggerFactory.getLogger(WriteThread.class);
     private Socket s;
     private String name;
-    WriteThread(User u){
-        this.s = u.getSocket();
-        this.name = u.getUserName();
+    WriteThread(Socket s){
+        this.s = s;
     }
     @Override
     public void run() {
@@ -24,7 +21,7 @@ public class WriteThread implements Runnable{
             String msg;
             while(true){
                 msg = bufferedReader.readLine();
-                pw.println(name+": "+msg);
+                pw.println(msg);
                 pw.flush();
                 if(msg.equalsIgnoreCase("bye")) {
                     System.exit(0);

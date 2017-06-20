@@ -1,8 +1,3 @@
-import java.net.Socket;
-
-/**
- * Created by Sai Lalith Pathi on 15-Jun-17.
- */
 class User {
     private String name;
 
@@ -10,17 +5,8 @@ class User {
         return name;
     }
 
-    private Socket socket;
-
     User(String userName) {
         name = userName;
     }
 
-    Socket getSocket() {
-        return socket;
-    }
-
-    void setSocket(Socket socket) {
-        this.socket = socket;
-    }
 }

@@ -4,16 +4,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import org.slf4j.*;
-/**
- * Created by Sai Lalith Pathi on 09-Jun-17.
- */
+
 class MaintainClients implements Runnable{
     private static  Logger logger = LoggerFactory.getLogger(MaintainClients.class);
     private Socket socket;
     private User user;
     MaintainClients(User u){
         this.user = u;
-        this.socket = u.getSocket();
+        this.socket = ConnectionRegistry.getUserSocket(u);
     }
     @Override
     public void run() {
@@ -25,16 +23,16 @@ class MaintainClients implements Runnable{
             while ((msgFromClient = bufferedReader.readLine()) != null) {
                 if (msgFromClient.toLowerCase().contains("bye")) {
                     logger.info("left !"+user.getUserName());
-                    for(User allUsers : Chatserver.getList(user)){
-                        msgToClient(user.getUserName()+"  Left!", allUsers.getSocket());
+                    for(User everyUser : Chatserver.getList(user)){
+                        msgToClient(user.getUserName()+"  Left!", ConnectionRegistry.getUserSocket(everyUser));
                     }
                     socket.close();
                     break;
                 } else {
                     Stats.add();
-                    for(User allUsers : Chatserver.getList(user)) {
-                        if(allUsers.getSocket() != socket) {
-                            msgToClient(msgFromClient, allUsers.getSocket());
+                    for(User everyUser : Chatserver.getList(user)) {
+                        if(ConnectionRegistry.getUserSocket(everyUser) != socket) {
+                            msgToClient(user.getUserName()+": "+msgFromClient, ConnectionRegistry.getUserSocket(everyUser));
                         }
                     }
                 }
@@ -44,7 +42,7 @@ class MaintainClients implements Runnable{
 
         }
     }
-    private void msgToClient(String msgFromClient, Socket si) {
+    static void msgToClient(String msgFromClient, Socket si) {
         try {
             PrintWriter pw = new PrintWriter(si.getOutputStream());
             pw.println(msgFromClient);

@@ -3,14 +3,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import org.slf4j.*;
-/**
- * Created by Sai Lalith Pathi on 08-Jun-17.
- */
+
 public class ReadThread implements Runnable{
     private static  Logger logger = LoggerFactory.getLogger(ReadThread.class);
     private Socket s;
-    ReadThread(User u){
-        this.s = u.getSocket();
+    ReadThread(Socket s){
+        this.s = s;
     }
     @Override
     public void run() {

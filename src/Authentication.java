@@ -1,12 +1,10 @@
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import java.util.HashMap;
 import java.util.Map;
-/**
- * Created by Sai Lalith Pathi on 09-Jun-17.
- */
+
 class Authentication {
-    private HashMap<String,String> userList = new HashMap<>();
-    boolean isValidUser(String userName,String password){
+    private static HashMap<String,String> userList = new HashMap<>();
+    static boolean isValidUser(String userName,String password){
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
         addNewUser("sai",passwordEncryptor.encryptPassword("sai"));
         addNewUser("lalith",passwordEncryptor.encryptPassword("lalith"));
@@ -17,7 +15,7 @@ class Authentication {
         }
         return false;
     }
-    private void addNewUser(String userName,String password){
+    private static void addNewUser(String userName,String password){
         userList.put(userName,password);
     }
 }
