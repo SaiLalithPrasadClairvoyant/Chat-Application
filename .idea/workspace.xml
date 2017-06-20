@@ -2,19 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cddf352-101f-46f2-92d5-d97a9a16e278" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Chat-Application.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Authentication.java" afterPath="$PROJECT_DIR$/src/chat/application/Authentication.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Chat Application.iml" afterPath="$PROJECT_DIR$/src/chat/application/Chat Application.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Chatclient.java" afterPath="$PROJECT_DIR$/src/chat/application/Chatclient.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Chatserver.java" afterPath="$PROJECT_DIR$/src/chat/application/Chatserver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/ConnectionRegistry.java" afterPath="$PROJECT_DIR$/src/chat/application/ConnectionRegistry.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Group.java" afterPath="$PROJECT_DIR$/src/chat/application/Group.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/MaintainClient.java" afterPath="$PROJECT_DIR$/src/chat/application/MaintainClient.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/ReadThread.java" afterPath="$PROJECT_DIR$/src/chat/application/ReadThread.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/Stats.java" afterPath="$PROJECT_DIR$/src/chat/application/Stats.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/User.java" afterPath="$PROJECT_DIR$/src/chat/application/User.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ChatApplication/WriteThread.java" afterPath="$PROJECT_DIR$/src/chat/application/WriteThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -651,7 +638,14 @@
       <option name="project" value="LOCAL" />
       <updated>1497955237505</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Intial">
+      <created>1497962023827</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1497962023827</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -665,7 +659,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -686,7 +679,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29892474" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.3295099" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" x="263" y="238" width="1580" height="478" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1734694" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1734694" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26694474" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295099" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
