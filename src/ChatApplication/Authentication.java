@@ -1,8 +1,11 @@
 package ChatApplication;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
+
 
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -31,6 +34,13 @@ class Authentication {
     }
 
     private static void addNewUser(String userName, String password) {
+        try(OutputStream outputStream = new FileOutputStream("User.properties")){
+            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+            Properties properties = new Properties();
+            properties.setProperty(userName,passwordEncryptor.encryptPassword(password));
+            properties.store(outputStream,null);
+        }catch(Exception e){
+            logger.info("Exception while addind new User",e);
+        }
     }
-
 }
