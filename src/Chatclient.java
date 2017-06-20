@@ -1,10 +1,12 @@
 import java.io.IOException;
 import java.net.Socket;
+
 import org.slf4j.*;
 
 
 public class Chatclient {
     private static Logger logger = LoggerFactory.getLogger(Chatclient.class);
+
     public static void main(String[] args) throws IOException {
         try {
             Socket s = new Socket("localhost", 5000);
@@ -14,8 +16,8 @@ public class Chatclient {
             WriteThread writeThread = new WriteThread(s);
             Thread t2 = new Thread(writeThread);
             t2.start();
-        }catch(Exception e){
-            logger.info("Exception !");
+        } catch (Exception e) {
+            logger.info("Exception !",e);
         }
     }
 }
