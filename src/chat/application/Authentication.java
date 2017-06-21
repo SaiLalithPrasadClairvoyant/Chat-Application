@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 
-
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,20 +27,20 @@ class Authentication {
                 return true;
             }
         } catch (Exception e) {
-            logger.info("Exception at Authentication",e);
+            logger.info("Exception at Authentication", e);
         }
         return false;
     }
 
     public static void addNewUser(String userName, String password) {
-        try(OutputStream outputStream = new FileOutputStream("User.properties",true)){
+        try (OutputStream outputStream = new FileOutputStream("User.properties", true)) {
             StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
             Properties properties = new Properties();
-            properties.setProperty(userName,passwordEncryptor.encryptPassword(password));
-            properties.store(outputStream,null);
+            properties.setProperty(userName, passwordEncryptor.encryptPassword(password));
+            properties.store(outputStream, null);
             outputStream.close();
-        }catch(Exception e){
-            logger.info("Exception while addind new User",e);
+        } catch (Exception e) {
+            logger.info("Exception while addind new User", e);
         }
     }
 }

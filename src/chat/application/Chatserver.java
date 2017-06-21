@@ -43,7 +43,6 @@ public class Chatserver {
     }
 
     public static void main(String[] ar) {
-        Authentication.addNewUser("sai","sai");
         TimerTask timerTask = new Stats();
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(timerTask, 0, 30 * 1000L);
@@ -66,6 +65,11 @@ public class Chatserver {
         User user = new User(name);
         MaintainClient.msgToClient("Password please", s);
         String password = bufferedReader.readLine();
+        for (Group g : Chatserver.getAllGroups()) {
+            if (!g.getUsers().isEmpty()) {
+                MaintainClient.msgToClient("Active group : " + g.getGroupName(), s);
+            }
+        }
         MaintainClient.msgToClient("Which group do you want to join?", s);
         String groupNameFromUser = bufferedReader.readLine();
         if (Authentication.isValidUser(name, password)) {

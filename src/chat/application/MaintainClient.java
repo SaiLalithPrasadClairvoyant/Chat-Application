@@ -18,9 +18,9 @@ class MaintainClient implements Runnable {
         this.socket = ConnectionRegistry.getUserSocket(u);
     }
 
-    static void msgToClient(String msgToSend, Socket si) {
+    static void msgToClient(String msgToSend, Socket socket) {
         try {
-            PrintWriter pw = new PrintWriter(si.getOutputStream());
+            PrintWriter pw = new PrintWriter(socket.getOutputStream());
             pw.println(msgToSend);
             pw.flush();
         } catch (IOException e) {
@@ -45,6 +45,7 @@ class MaintainClient implements Runnable {
                     socket.close();
                     break;
                 } else {
+
                     Stats.add();
                     for (User everyUser : Chatserver.getList(user)) {
                         if (!user.equals(everyUser)) {
