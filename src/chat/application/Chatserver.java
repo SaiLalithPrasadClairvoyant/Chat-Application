@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import org.slf4j.*;
 
@@ -43,7 +40,7 @@ public class Chatserver {
     }
 
     public static void main(String[] ar) {
-        TimerTask timerTask = new Stats();
+        TimerTask timerTask = new MessageCounter();
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(timerTask, 0, 30 * 1000L);
         Chatserver.startServer();
@@ -55,6 +52,7 @@ public class Chatserver {
 
     private static void addGroup(Group g) {
         allGroups.add(g);
+        MessageCounter.addNewGroup(g);
     }
 
     private static void registerNewUser(Socket s) throws IOException {
@@ -65,14 +63,14 @@ public class Chatserver {
         User user = new User(name);
         MaintainClient.msgToClient("Password please", s);
         String password = bufferedReader.readLine();
-        for (Group g : Chatserver.getAllGroups()) {
-            if (!g.getUsers().isEmpty()) {
-                MaintainClient.msgToClient("Active group : " + g.getGroupName(), s);
-            }
-        }
-        MaintainClient.msgToClient("Which group do you want to join?", s);
-        String groupNameFromUser = bufferedReader.readLine();
         if (Authentication.isValidUser(name, password)) {
+            for (Group g : Chatserver.getAllGroups()) {
+                if (!g.getUsers().isEmpty()) {
+                    MaintainClient.msgToClient("Active group : " + g.getGroupName(), s);
+                }
+            }
+            MaintainClient.msgToClient("Which group do you want to join?", s);
+            String groupNameFromUser = bufferedReader.readLine();
             ConnectionRegistry.setUserSocketMap(user, s);
             boolean groupExists = false;
             for (Group g : Chatserver.getAllGroups()) {
@@ -96,6 +94,7 @@ public class Chatserver {
             maintainClientThread.start();
         } else {
             MaintainClient.msgToClient("Authentication failed !", s);
+            s.close();
         }
     }
 
@@ -111,7 +110,17 @@ public class Chatserver {
         for (Group g : Chatserver.getAllGroups()) {
             if (g.getUsers().contains(user)) {
                 g.removeUser(user);
+                break;
             }
         }
+    }
+
+    static Group getGroupOfUser(User user) {
+        for (Group g : Chatserver.getAllGroups()) {
+            if (g.getUsers().contains(user)) {
+                return g;
+            }
+        }
+        return null;
     }
 }

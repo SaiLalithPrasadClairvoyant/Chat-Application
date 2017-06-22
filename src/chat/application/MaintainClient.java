@@ -1,9 +1,6 @@
 package chat.application;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import org.slf4j.*;
@@ -38,15 +35,14 @@ class MaintainClient implements Runnable {
             while ((msgFromClient = bufferedReader.readLine()) != null) {
                 if (msgFromClient.equalsIgnoreCase("bye")) {
                     logger.info("left !" + user.getUserName());
+                    Chatserver.removeUser(user);
                     for (User everyUser : Chatserver.getList(user)) {
                         msgToClient(user.getUserName() + "  Left!", ConnectionRegistry.getUserSocket(everyUser));
                     }
-                    Chatserver.removeUser(user);
                     socket.close();
                     break;
                 } else {
-
-                    Stats.add();
+                    MessageCounter.addMessage(Chatserver.getGroupOfUser(user));
                     for (User everyUser : Chatserver.getList(user)) {
                         if (!user.equals(everyUser)) {
                             msgToClient(user.getUserName() + ": " + msgFromClient, ConnectionRegistry.getUserSocket(everyUser));
