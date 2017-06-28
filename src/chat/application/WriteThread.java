@@ -13,7 +13,7 @@ public class WriteThread implements Runnable {
         this.s = s;
     }
 
-    static char[] askForPassword() {
+    private static char[] askForPassword() {
         char[] dum = {'a', 'b'};
         Console console = System.console();
         if (console != null) {
@@ -25,21 +25,29 @@ public class WriteThread implements Runnable {
     @Override
     public void run() {
         try {
+            int i = 0;
             logger.info(s.getLocalPort() + "WriteThread");
             PrintWriter pw = new PrintWriter(s.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            String msg;
+            String msg = "";
             while (true) {
-                msg = bufferedReader.readLine();
-                pw.println(msg);
-                pw.flush();
+                if (i == 1) {
+                    String pass = new String(askForPassword());
+                    pw.println(pass);
+                    pw.flush();
+                    i = 10;
+                } else {
+                    msg = bufferedReader.readLine();
+                    pw.println(msg);
+                    pw.flush();
+                    i++;
+                }
                 if (msg.equalsIgnoreCase("bye")) {
                     break;
                 }
             }
         } catch (IOException e) {
             logger.error("IOException at WriteThread", e);
-            System.exit(0);
         }
     }
 }

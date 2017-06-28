@@ -27,7 +27,7 @@ class MessageCounter extends TimerTask {
     @Override
     public void run() {
         for (Map.Entry<Group, Integer> groupIntegerEntry : messages.entrySet()) {
-            System.out.println("Total number of Messages in " + groupIntegerEntry.getKey().getGroupName() + "are :" + groupIntegerEntry.getValue());
+            System.out.println("Total number of Messages in '" + groupIntegerEntry.getKey().getGroupName() + "' are :" + groupIntegerEntry.getValue());
         }
         if (!messages.isEmpty()) {
             System.out.println("Total Messages :" + totalMessages);

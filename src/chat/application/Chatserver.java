@@ -19,7 +19,6 @@ public class Chatserver {
             while (true) {
                 Socket s = serverSocket.accept();
                 registerNewUser(s);
-                logger.info("Client Connected at port   " + s.getPort());
                 if (allGroups.size() == 5) {
                     serverSocket.close();
                     break;
@@ -37,13 +36,6 @@ public class Chatserver {
             }
         }
         return new ArrayList<>();
-    }
-
-    public static void main(String[] ar) {
-        TimerTask timerTask = new MessageCounter();
-        Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(timerTask, 0, 30 * 1000L);
-        Chatserver.startServer();
     }
 
     private static List<Group> getAllGroups() {
@@ -122,5 +114,12 @@ public class Chatserver {
             }
         }
         return null;
+    }
+
+    public static void main(String[] ar) {
+        TimerTask timerTask = new MessageCounter();
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(timerTask, 0, 30 * 1000L);
+        Chatserver.startServer();
     }
 }
