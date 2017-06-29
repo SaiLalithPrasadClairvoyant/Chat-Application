@@ -14,12 +14,12 @@ public class WriteThread implements Runnable {
     }
 
     private static char[] askForPassword() {
-        char[] dum = {'a', 'b'};
+        char[] dummy = {'a', 'b'};
         Console console = System.console();
         if (console != null) {
             return console.readPassword();
         }
-        return dum;
+        return dummy;
     }
 
     @Override
