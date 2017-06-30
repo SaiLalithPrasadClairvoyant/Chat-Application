@@ -7,11 +7,11 @@ import java.net.Socket;
 
 import org.slf4j.*;
 
-public class ReadThread implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(ReadThread.class);
+public class ReaderThread implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(ReaderThread.class);
     private Socket s;
 
-    ReadThread(Socket s) {
+    ReaderThread(Socket s) {
         this.s = s;
     }
 

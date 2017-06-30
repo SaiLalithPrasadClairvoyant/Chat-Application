@@ -5,11 +5,11 @@ import java.net.Socket;
 
 import org.slf4j.*;
 
-public class WriteThread implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(WriteThread.class);
+public class WriterThread implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(WriterThread.class);
     private Socket s;
 
-    WriteThread(Socket s) {
+    WriterThread(Socket s) {
         this.s = s;
     }
 

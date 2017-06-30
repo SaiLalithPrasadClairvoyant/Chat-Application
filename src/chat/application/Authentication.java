@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class Authentication {
-    private static Logger logger = LoggerFactory.getLogger(WriteThread.class);
+    private static Logger logger = LoggerFactory.getLogger(Authentication.class);
 
     private Authentication() {
         throw new IllegalStateException("Utility class");
@@ -40,7 +40,7 @@ class Authentication {
             properties.store(outputStream, null);
             outputStream.close();
         } catch (Exception e) {
-            logger.info("Exception while addind new User", e);
+            logger.info("Exception while adding new User", e);
         }
     }
 }
