@@ -1,4 +1,4 @@
-package chat.application;
+package chat.application.server;
 
 class User {
     private String name;

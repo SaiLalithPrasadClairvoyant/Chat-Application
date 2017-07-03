@@ -1,4 +1,4 @@
-package chat.application;
+package chat.application.server;
 
 import java.net.Socket;
 import java.util.HashMap;
