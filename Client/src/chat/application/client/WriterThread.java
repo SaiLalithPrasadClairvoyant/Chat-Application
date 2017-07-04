@@ -19,6 +19,10 @@ public class WriterThread implements Runnable {
         if (console != null) {
             return console.readPassword();
         }
+        else{
+            logger.info("Cannot find console .. Exiting !");
+            System.exit(0);
+        }
         return dummy;
     }
 
